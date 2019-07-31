@@ -1,0 +1,71 @@
+{
+	"index.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"img/1564394319(1).jpg"
+		],
+		"refer": [
+			"login.html"
+		]
+	},
+	"login.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"img/aef59df7bafa215102ce5193ca7575cb_1.jpg",
+			"js/mui.min.js",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"home.html"
+		]
+	},
+	"home.html": {
+		"resources": [
+			"js/mui.min.js",
+			"wechat_cc.html",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"wechat_tongxunlu.html",
+			"wechat_me.html",
+			"wechat_discover.html",
+			"wechat_cc.html"
+		]
+	},
+	"wechat_cc.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"img/1.jpg"
+		]
+	},
+	"wechat_tongxunlu.html": {
+		"resources": [
+			"img/icon_group.png",
+			"fonts/mui.ttf",
+			"img/1.jpg",
+			"img/11.jpg",
+			"img/2.jpg",
+			"css/mui.min.css"
+		]
+	},
+	"wechat_me.html": {
+		"resources": [
+			"css/mui.min.css",
+			"img/朋友圈.png",
+			"img/看一看.png"
+		]
+	},
+	"wechat_discover.html": {
+		"resources": [
+			"img/朋友圈.png",
+			"img/看一看.png",
+			"img/friend.png",
+			"img/look.png",
+			"js/mui.min.js",
+			"css/mui.min.css"
+		]
+	}
+}

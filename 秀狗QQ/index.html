@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="js/util.js" ></script>
+    <script type="text/javascript" charset="utf-8">
+      	mui.init();
+      	
+      	//页面跳转-2s之后，如果没有登录则跳转到登录页，如果已经登录就条状到首页
+      	//mui的跳转
+      	//H5+的跳转
+      	mui.plusReady(function(){
+      		//操作plus对象，plus对象就是H5的核心对象
+      		
+      		setTimeout(function(){
+      			//获得当前页面
+      			var index= plus.webview.currentWebview();
+      			
+      			//跳转页面
+      			//获得当前的登录信息
+      			var user =util.getUser();
+      			if(user){
+      				//已经登录
+      				plus.webview.open("home.html","home.html");
+      			}else{
+      				plus.webview.open("login.html","login.html");
+      			}
+      			
+      			//关闭当前页面
+      			index.close();
+      		},2000);
+      		
+      	});
+      
+    </script>
+</head>
+<body> 
+	<img style="width: 100%;height: 100%;" src="img/1564394319(1).jpg">
+</body>
+</html>

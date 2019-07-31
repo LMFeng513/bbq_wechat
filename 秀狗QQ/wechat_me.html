@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <style>
+    	img{width:100px; height:100px; border-radius:50%;-webkit-border-radius:50%;-moz-border-radius:50%;}
+    </style>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="js/util.js" ></script>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+      	mui.plusReady(function(){
+      		
+      		//更新信息
+      		updateUserInfo();
+      		
+      		//绑定事件
+      		document.getElementById("logout").addEventListener("tap", function(){
+      			//删除用户信息
+      			plus.storage.removeItem("login_user");
+      			
+      			//跳转到登录页
+      			var page = plus.webview.getWebviewById("home.html");
+      			plus.webview.open("login.html", "login.html");
+      			page.close();
+      		});
+      		
+      		//更新头像
+      		document.getElementById("updateheader_a").addEventListener("tap", function(){
+      			//跳转到更新头像的页面
+      			mui.openWindow("update_header.html", "update_header.html");
+      		});
+      		
+      	});
+      	
+      	//更新页面的信息
+      	function updateUserInfo(){
+      		//获得登录的用户信息，并且设置用户的信息展示
+      		var user = util.getUser();
+      		
+      		//昵称
+      		var nickname = user.nickname;
+      		//账号
+      		var username = user.username;
+      		
+      		document.getElementById("username_a").innerHTML = username;
+      		document.getElementById("nickname_a").innerHTML = nickname;
+      		
+			if(user.headerCrm){
+				document.getElementById("header_img").src = util.getImg(user.headerCrm);
+			}
+      	}
+      	
+    </script>
+</head>
+<body>
+	<ul class="mui-table-view" style="margin-top: 20px;">
+	    <li class="mui-table-view-cell mui-media">
+	        <a href="javascript:;" id="updateheader_a">
+	        	<!--<a class="mui-icon mui-icon-arrowright mui-pull-right" style="line-height: 40px;" ></a>-->
+	            <img id="header_img" class="mui-media-object mui-pull-right" src="img/default_header.png">
+	            <div class="mui-media-body" style="line-height: 40px;">
+	                	头像
+	            </div>
+	        </a>
+	    </li>
+	    <li class="mui-table-view-cell mui-media">
+	        <a href="javascript:;">
+	        	<a id="username_a" class="mui-pull-right" style="color: gray;">默认账号</a>
+	            <div class="mui-media-body">
+	                	账号
+	            </div>
+	        </a>
+	    </li>
+	    <li class="mui-table-view-cell mui-media">
+	        <a href="javascript:;">
+	        	<a id="nickname_a" class="mui-pull-right" style="color: gray;">默认昵称</a>
+	            <div class="mui-media-body">
+	                	昵称
+	            </div>
+	        </a>
+	    </li>
+	    <li class="mui-table-view-cell mui-media">
+	        <a href="javascript:;">
+	            <img class="mui-media-object mui-pull-right" src="img/qrcode.png">
+	            <div class="mui-media-body" style="line-height: 40px;">
+	                	名片
+	            </div>
+	        </a>
+	    </li>
+	</ul>
+	
+	<ul class="mui-table-view" style="margin-top: 20px;">
+	    <li class="mui-table-view-cell mui-media">
+	        <a href="javascript:;">
+	            <div class="mui-media-body" style="text-align: center;" id="logout">
+	                	退出账号
+	            </div>
+	        </a>
+	    </li>
+	</ul>
+</body>
+</html>

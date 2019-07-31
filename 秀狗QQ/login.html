@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		    <style>
+    	img{width:100px; height:100px; border-radius:50%;-webkit-border-radius:50%;-moz-border-radius:50%;}
+    </style>
+    <script src="js/util.js"></script>
+    	<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			mui.plusReady(function(){
+				
+				//给按钮设置点击事件
+				document.getElementById("toregister").addEventListener('tap',function(){
+					
+					mui.openWindow("register.html","register.html");
+				});
+				//登录按钮的点击事件
+				document.getElementById("login_btn").addEventListener('tap',function(){
+					//tiao转到首页
+					var username =document.getElementById("username").value;
+					var password =document.getElementById("password").value;
+					
+					util.ajax({
+						url: url.login,
+						data:{
+							"username":username,
+							"password":password
+						},
+						success:function(data){
+							if(data.code ==1000){
+								//登录成功
+								
+								//获得用户的信息
+								var user =data.data;
+								util.setUser(user);
+								
+								//tiaozhuan dao 首页
+								
+								var cpage =plus.webview.currentWebview();
+								plus.webview.open("home.html","home.html");
+								cpage.close();
+					
+							}else{
+								plus.nativeUI.toast(data.msg);
+							}
+						}
+					});
+					
+					
+				
+				});
+			});
+		</script>
+	</head>
+
+	<body style="background-color: #FFFFFF; text-align: center;">
+	
+	<!-- 头像 -->
+	<img style="width: 120px; height: 120px; margin-top: 150px;" src="img/aef59df7bafa215102ce5193ca7575cb_1.jpg"/>
+
+	<!-- 登录的表单 -->
+	<form class="mui-input-group" style="margin-top: 20px;">
+	    <div class="mui-input-row">
+	        <label>用户名</label>
+	    	<input type="text" id="username" class="mui-input-clear" placeholder="请输入用户名">
+	    </div>
+	    <div class="mui-input-row">
+	        <label>密码</label>
+	        <input type="password" id="password" class="mui-input-password" placeholder="请输入密码">
+	    </div>
+	    <div class="mui-button-row">
+	        <button type="button" id="login_btn" style="width: 80%;" class="mui-btn mui-btn-success" >登录</button>
+	    </div>
+	    <a id="toregister">注册账号</a>&nbsp;&nbsp;&nbsp;&nbsp;<a>忘记密码</a>
+	</form>
+	
+	</body>
+
+</html>

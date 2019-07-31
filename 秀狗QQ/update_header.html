@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <style>
+    	img{width:100px; height:100px; border-radius:50%;-webkit-border-radius:50%;-moz-border-radius:50%;}
+    </style>
+    <script type="text/javascript" src="js/util.js"></script>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+      	
+      	mui.plusReady(function(){
+      		
+      		var user = util.getUser();
+      		//从登录用户的头像中获得图片，更新到大图中
+      		if(user.header){
+      			document.getElementById("header_img").src = util.getImg(user.header);
+      		}
+      		
+      		
+      		//从本地选择图片
+      		document.getElementById("local_image").addEventListener('tap', function(){
+      			//选择本地的图片
+      			plus.gallery.pick(function(file){
+        			//plus.nativeUI.toast("当前选择的图片为：" + file)	
+      				
+      				//将图片上传到后台服 务器
+      				var upload = plus.uploader.createUpload(url.uploaderHeader, {},
+      					function(t, status){
+      						//上传成功的回调
+      						if(status == 200){
+      							//获得回传的结果
+      							var result = JSON.parse(upload.responseText);
+      							//大图
+      							var header = result.header;
+      							//小图
+      							var headerCrm = result.headerCrm;
+      							
+      							//更新页面的大图
+      							document.getElementById("header_img").src = util.getImg(header);
+      							
+      							//更新手机端本地的用户头像信息
+      							user.header = header;
+      							user.headerCrm = headerCrm;
+      							util.setUser(user);
+      							
+      							//跨页面的调用
+      							var me = plus.webview.getWebviewById("wechat_me.html");
+      							me.evalJS("updateUserInfo()");
+      						}
+      					}
+      				);
+      				
+      				//设置上传文件
+      				upload.addFile(file, {"key": "file"});
+      				upload.addData("uid", user.id + "");
+      				upload.start();
+      				
+      				//关闭弹出框
+      				mui("#menu").popover("hide");
+      			});
+      		
+      		});
+      		
+      	});
+      	
+    </script>
+</head>
+<body>
+
+	<!-- 头部信息 -->
+	<header class="mui-bar mui-bar-nav" style="background-color: #000000;">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #FFFFFF;"></a>
+	    <a href="#menu" class="mui-icon mui-icon-bars mui-pull-right" style="color: #FFFFFF;"></a>
+	    <h1 class="mui-title" style="color: #FFFFFF;">头像</h1>
+	</header>
+	
+	<div style="text-align: center;">
+		<!-- 展示图片 -->
+		<img id="header_img" style="margin-top: 60px; width: 80%; height: 80%;" src="img/default_header.png"/>
+	</div>
+	
+	<!-- 弹出菜单 -->
+	<div id="menu" class="mui-popover mui-popover-action mui-popover-bottom">
+	    <ul class="mui-table-view">
+	        <li class="mui-table-view-cell"><a id="local_image">从本地选择</a></li>
+	        <li class="mui-table-view-cell"><a id="camera_image">拍照</a></li>
+	    </ul>
+	    <ul class="mui-table-view">
+	        <li class="mui-table-view-cell"><a href="#menu">取消</a></li>
+	    </ul>
+	</div>
+	
+</body>
+</html>
